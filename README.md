@@ -1,18 +1,11 @@
-Pengukuran Objek Real-time dengan Kalibrasi Kamera
+Real-time Object Measurement with Camera Calibration
 
+Introduction This project provides a real-time object measurement solution using cameras and traditional computer vision techniques (contour detection) enhanced with camera calibration. This calibration is important for correcting lens distortion, ensuring measurement accuracy across frames. Measurement results are displayed in meters (m).
 
+The system works by detecting a reference object with known physical dimensions (e.g. an ID card or other rectangular object) in each frame. A pixels per millimeter ratio (pixels_per_mm) is then calculated from this reference object, and used to convert the pixel dimensions of other detected objects into real-world physical sizes.
 
-Pendahuluan
-Proyek ini menyediakan solusi pengukuran objek secara real-time menggunakan kamera dan teknik computer vision tradisional (deteksi kontur) yang ditingkatkan dengan kalibrasi kamera. Kalibrasi ini penting untuk mengoreksi distorsi lensa, memastikan akurasi pengukuran di seluruh frame. Hasil pengukuran ditampilkan dalam satuan meter (m).
+Key Features of Camera Calibration: Uses the ChArUco pattern to obtain the camera's intrinsic parameters and distortion coefficients, which enables correction of lens distortion in the video frame. Real-time Measurement: Capable of detecting and measuring object dimensions directly from the camera feed. Dynamic Reference Object: Uses a reference object with known physical dimensions to dynamically determine the measurement scale (pixels to millimeters) in each frame. Output in Meters: Object width and height measurement results are displayed in meters. Pure OpenCV: OpenCV-based implementation with no additional deep learning model training required (such as YOLO).
 
-Sistem ini bekerja dengan mendeteksi objek referensi dengan dimensi fisik yang diketahui (misalnya, kartu ID atau objek persegi panjang lainnya) di setiap frame. Rasio piksel per milimeter (pixels_per_mm) kemudian dihitung dari objek referensi ini, dan digunakan untuk mengonversi dimensi piksel dari objek lain yang terdeteksi menjadi ukuran fisik di dunia nyata.
-
-Fitur Utama
-Kalibrasi Kamera: Menggunakan pola ChArUco untuk mendapatkan parameter intrinsik kamera dan koefisien distorsi, yang memungkinkan koreksi distorsi lensa pada frame video.
-Pengukuran Real-time: Mampu mendeteksi dan mengukur dimensi objek secara langsung dari feed kamera.
-Objek Referensi Dinamis: Menggunakan objek referensi dengan dimensi fisik yang diketahui untuk menentukan skala pengukuran (piksel ke milimeter) secara dinamis di setiap frame.
-Output dalam Meter: Hasil pengukuran lebar dan tinggi objek ditampilkan dalam meter.
-OpenCV Murni: Implementasi berbasis OpenCV tanpa memerlukan pelatihan model deep learning tambahan (seperti YOLO).
 Struktur Proyek
 .
 ├── utlis.py       # Skrip untuk melakukan kalibrasi kamera
