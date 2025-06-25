@@ -1,13 +1,14 @@
-Real-time Object Measurement with Camera Calibration
+# :rocket: Real-time Object Measurement with Camera Calibration
 
-Introduction This project provides a real-time object measurement solution using cameras and traditional computer vision techniques (contour detection) enhanced with camera calibration. This calibration is important for correcting lens distortion, ensuring measurement accuracy across frames. Measurement results are displayed in meters (m).
+# Introduction
+This project provides a real-time object measurement solution using cameras and traditional computer vision techniques (contour detection) enhanced with camera calibration. This calibration is important for correcting lens distortion, ensuring measurement accuracy across frames. Measurement results are displayed in meters (m).
 
 The system works by detecting a reference object with known physical dimensions (e.g. an ID card or other rectangular object) in each frame. A pixels per millimeter ratio (pixels_per_mm) is then calculated from this reference object, and used to convert the pixel dimensions of other detected objects into real-world physical sizes.
 
 Key Features of Camera Calibration: Uses the ChArUco pattern to obtain the camera's intrinsic parameters and distortion coefficients, which enables correction of lens distortion in the video frame. Real-time Measurement: Capable of detecting and measuring object dimensions directly from the camera feed. Dynamic Reference Object: Uses a reference object with known physical dimensions to dynamically determine the measurement scale (pixels to millimeters) in each frame. Output in Meters: Object width and height measurement results are displayed in meters. Pure OpenCV: OpenCV-based implementation with no additional deep learning model training required (such as YOLO).
 
-Struktur Proyek
-.
+# 📽️Project Structure📽️
+
 ├── utlis.py       # Skrip untuk melakukan kalibrasi kamera
 
 ├── Objectmeasurement.py        # Skrip utama untuk pengukuran objek real-time
@@ -18,57 +19,48 @@ Struktur Proyek
 
 └── README.md                 # Berkas ini
 
-Persyaratan Sistem
+# 🎶System Requirements
 - Python 3.x
-- Kamera (webcam atau kamera eksternal)
-- Objek referensi dengan dimensi fisik yang diketahui (misalnya kartu ID)
-- Lingkungan pengembangan (direkomendasikan VS Code)
+- Camera (webcam or external camera)
+- Reference object with known physical dimensions (e.g. ID card)
+- Development environment (VS Code recommended)
 
-Instalasi
-Kloning Repositori:
+# 🖥️Installation
+Clone Repository:
 
-Buat Virtual Environment (Direkomendasikan):
-
+Create a Virtual Environment (Recommended):
 
 python -m venv venv
-# Di Windows:
+##  On Windows:
 .\venv\Scripts\activate
-# Di macOS/Linux:
+##  On macOS/Linux:
 source venv/bin/activate
-Instal Dependensi:
+
+Install Dependencies:
+
 pip install opencv-python numpy
-Penggunaan
-Langkah 1: Kalibrasi Kamera
-Sebelum melakukan pengukuran, Anda harus mengkalibrasi kamera Anda. Ini akan membuat file calibration_data.npz yang diperlukan oleh aplikasi pengukuran.
 
-Langkah 2: Pengukuran Objek Real-time
-Setelah kalibrasi berhasil, Anda dapat menjalankan aplikasi pengukuran.
+Real-Time Object Measurement with Camera Calibration
 
-Siapkan Objek Referensi:
 
-Gunakan objek persegi panjang (misalnya kartu ID, kartu kredit, atau benda lain) yang dimensi lebar dan tingginya Anda ketahui secara akurat dalam milimeter.
-Edit measurement_app.py: Ubah nilai REF_OBJ_WIDTH_MM dan REF_OBJ_HEIGHT_MM pada skrip agar sesuai dengan dimensi objek referensi Anda.
-Contoh untuk kartu ID standar:
-Python
-
-REF_OBJ_WIDTH_MM = 85.60  # Lebar kartu ID standar (dalam mm)
-REF_OBJ_HEIGHT_MM = 53.98 # Tinggi kartu ID standar (dalam mm)
-Jalankan Skrip Pengukuran:
-
-Jalankan skrip:
-python measurement_app.py
-Sebuah jendela kamera akan muncul. Pastikan objek referensi Anda terlihat jelas di kamera. Aplikasi akan mendeteksi objek referensi, menghitung rasio piksel per mm, dan kemudian mengukur objek lain yang terdeteksi.
-Tekan 'q' untuk keluar dari aplikasi.
-
-Cara Kerja Pengukuran
-Undistorsi Gambar: Setiap frame dari kamera pertama-tama di-undistorsi menggunakan camera_matrix dan dist_coeffs yang diperoleh dari kalibrasi. Ini menghilangkan efek "melengkung" dari lensa.
-Deteksi Kontur: Gambar yang sudah ter-undistorsi kemudian diproses (grayscale, blur, Canny edge detection) untuk menemukan kontur objek.
-Identifikasi Objek Referensi: Skrip mencari kontur persegi panjang yang rasio aspek dan ukurannya paling mendekati objek referensi yang telah Anda tentukan dimensinya.
-Penentuan Skala (Piksel ke Milimeter): Setelah objek referensi terdeteksi, rasio pixels_per_mm dihitung dengan membagi dimensi piksel objek referensi dengan dimensi fisik milimeternya. Rasio ini bersifat dinamis untuk setiap frame karena jarak objek ke kamera dapat bervariasi.
-Pengukuran Objek Lain: Kontur persegi panjang lain yang terdeteksi (selain objek referensi) kemudian diukur. Dimensi pikselnya dibagi dengan pixels_per_mm untuk mendapatkan ukuran dalam milimeter.
-Konversi ke Meter: Hasil dalam milimeter kemudian dibagi dengan 1000 untuk ditampilkan dalam meter.
-Batasan dan Peningkatan Potensial
-Asumsi Planar: Akurasi terbaik dicapai ketika objek referensi dan objek yang diukur berada pada bidang yang relatif datar dan sejajar dengan bidang gambar kamera. Objek yang jauh atau sangat miring akan memiliki akurasi yang menurun.
-Deteksi Kontur Sederhana: Metode deteksi kontur sederhana mungkin kesulitan dalam lingkungan yang kompleks, dengan pencahayaan yang buruk, atau jika ada banyak objek serupa yang bisa membingungkan.
-Robustness: Identifikasi objek referensi dan objek yang akan diukur saat ini bergantung pada rasio aspek dan area. Ini bisa ditingkatkan dengan menggunakan teknik segmentasi atau deteksi objek berbasis deep learning (seperti YOLO) setelah proses undistorsi.
-Kalibrasi Offline: Kalibrasi kamera dilakukan secara offline. Untuk skenario di mana kamera bisa bergerak secara signifikan, sistem yang memantau pose kamera secara real-time (misalnya dengan pelacakan marker ArUco) dapat meningkatkan akurasi.
+# Measurement Workflow
+## - Image Undistortion: 
+Each frame from the camera is first undistorted using the camera_matrix and dist_coeffs obtained from calibration. This removes the "warping" effect of the lens.
+## - Contour Detection: 
+The undistorted image is then processed (grayscale, blur, Canny edge detection) to find the contours of the object.
+## - Reference Object Identification: 
+The script searches for a rectangular contour whose aspect ratio and size are closest to the reference object for which you have specified dimensions.
+Scale Determination (Pixels to Millimeters): Once the reference object is detected, the pixels_per_mm ratio is calculated by dividing the pixel dimensions of the reference object by its millimeter physical dimensions. This ratio is dynamic for each frame as the distance of the object to the camera may vary.
+## - Measurement of Other Objects: 
+Other detected rectangular contours (other than the reference object) are then measured. Its pixel dimensions are divided by pixels_per_mm to get the size in millimeters.
+## - Conversion to Meters: 
+The result in millimeters is then divided by 1000 to be displayed in meters.
+Limitations and Potential Improvements
+## - Planar Assumption: 
+The best accuracy is achieved when the reference object and the measured object are on a relatively flat plane and parallel to the camera image plane. Objects that are far away or highly tilted will have degraded accuracy.
+Simple Contour Detection: 
+Simple contour detection methods may struggle in complex environments, with poor lighting, or if there are many similar objects that can be confusing.
+## - Robustness: 
+The identification of the reference object and the object to be measured currently depends on aspect ratio and area. This can be improved by using segmentation techniques or deep learning-based object detection (such as YOLO) after the undistortion process.
+## - Offline Calibration: 
+Camera calibration is performed offline. For scenarios where the camera may move significantly, systems that monitor the camera pose in real-time (e.g. with ArUco marker tracking) can improve accuracy.
