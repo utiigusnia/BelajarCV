@@ -11,13 +11,13 @@ Key Features of Camera Calibration: Uses the ChArUco pattern to obtain the camer
 
 ├── utlis.py       # Skrip untuk melakukan kalibrasi kamera
 
-├── Objectmeasurement.py        # Skrip utama untuk pengukuran objek real-time
+├── Objectmeasurement.py        
 
-├── assets/                   # (Opsional) Folder untuk gambar contoh
+├── assets/                   #optional
 
 │   └── charuco_board.png
 
-└── README.md                 # Berkas ini
+└── README.md                 
 
 # 🎶System Requirements
 - Python 3.x
